@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "devils-workshop"
+version = "0.27.0"
+description = "Desktop app for writing novels chapter by chapter with models on OpenRouter."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["PyYAML>=6.0", "httpx>=0.28"]
+
+[project.scripts]
+devils-workshop = "devils_workshop.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["devils_workshop*"]
+
+[tool.setuptools.package-data]
+devils_workshop = ["defaults/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = ["live: makes a real OpenRouter call (opt-in, needs DW_LIVE_TEST=1 and an API key)"]
+addopts = "-m 'not live'"
+# NiceGUI asks the browser whether the sidebar is open; the simulated user has no browser to answer.
+filterwarnings = ["ignore:coroutine 'Drawer.__init__.<locals>._request_value' was never awaited:RuntimeWarning"]

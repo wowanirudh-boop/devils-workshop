@@ -1,0 +1,95 @@
+name: build-windows
+
+# Builds DevilsWorkshop.exe on a Windows machine, checks it, and publishes it.
+# Runs when a version tag (v0.1.0, ...) is pushed, or by hand from the Actions tab
+# (then the release and its tag are created from the version given).
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish, e.g. v0.1.0 (leave empty to only build)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write  # needed to create the release
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest==9.1.1 pyinstaller==6.22.3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.20.0"  # runs the web page reader (planner/webpage.py); shipped inside the exe
+
+      - name: Run the tests on Windows
+        run: python -m pytest -q
+
+      - name: Node for the exe
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force build\node | Out-Null
+          Copy-Item (Get-Command node).Source build\node\node.exe
+
+      - name: Build DevilsWorkshop.exe
+        shell: pwsh
+        run: |
+          $nicegui = python -c "import nicegui, os; print(os.path.dirname(nicegui.__file__))"
+          # The app's templates are added by path: collecting them by package name
+          # found nothing on Windows (the package isn't installed, only checked out).
+          pyinstaller --noconfirm --clean --onefile --windowed --name DevilsWorkshop `
+            --paths . `
+            --add-data "$nicegui;nicegui" `
+            --add-data "devils_workshop\defaults;devils_workshop\defaults" `
+            --add-data "devils_workshop\vendor;devils_workshop\vendor" `
+            --add-binary "build\node\node.exe;node" `
+            --copy-metadata keyring `
+            --collect-submodules keyring.backends `
+            --collect-data fpdf `
+            --hidden-import keyring.backends.Windows `
+            --hidden-import pystray._win32 `
+            launcher.py
+
+      - name: Self-test the built app
+        shell: pwsh
+        run: |
+          $p = Start-Process -FilePath dist\DevilsWorkshop.exe -ArgumentList '--self-test','--self-test-output','selftest.txt' -Wait -PassThru
+          Get-Content selftest.txt
+          if ($p.ExitCode -ne 0) { throw "self-test failed with exit code $($p.ExitCode)" }
+
+      - name: Start the built app in browser mode and load its pages
+        run: python scripts/check_built_app.py dist\DevilsWorkshop.exe browser
+
+      - name: Start the built app in window mode
+        run: python scripts/check_built_app.py dist\DevilsWorkshop.exe window
+
+      - name: Keep the build (Actions artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: DevilsWorkshop-windows
+          path: |
+            dist/DevilsWorkshop.exe
+            selftest.txt
+
+      - name: Publish the release
+        if: startsWith(github.ref, 'refs/tags/') || inputs.version != ''
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version || github.ref_name }}
+        run: |
+          $notes = "Download DevilsWorkshop.exe and double-click it. Windows SmartScreen may warn the first time because the app isn't signed: choose 'More info', then 'Run anyway'."
+          gh release create "$env:VERSION" dist/DevilsWorkshop.exe selftest.txt --target "${{ github.sha }}" --title "Devil's Workshop $env:VERSION" --notes "$notes" --prerelease

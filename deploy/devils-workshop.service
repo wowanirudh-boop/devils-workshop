@@ -1,0 +1,32 @@
+# Devil's Workshop on a Linux server, for your phone over Tailscale (docs/cloud-setup.md).
+# deploy/setup-server.sh installs it as /etc/systemd/system/devils-workshop.service.
+#
+#   systemctl status devils-workshop       is it running?
+#   journalctl -u devils-workshop -f       what it is doing (the app's own log: ~dw/.config/devils-workshop/app.log)
+#   systemctl restart devils-workshop      after an update
+
+[Unit]
+Description=Devil's Workshop
+After=network-online.target tailscaled.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dw
+Group=dw
+WorkingDirectory=/opt/devils-workshop
+# No window: the app's own screens on 127.0.0.1:8080 (reach them through an SSH tunnel), and phone access on
+# port 8730 once it is switched on in Settings. The firewall lets 8730 in only over Tailscale.
+ExecStart=/opt/devils-workshop/.venv/bin/python -m devils_workshop app --background --port 8080
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+# Optional: keys as environment variables instead of Settings (OPENROUTER_API_KEY=..., VENICE_API_KEY=...,
+# EXPLABS_API_KEY=..., one per line). Keys saved in Settings go to ~dw/.config/devils-workshop/keys.json.
+EnvironmentFile=-/etc/devils-workshop.env
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+# Runtime libraries, pinned (see PLAN.md §12.4).
+# M1-M3 need PyYAML and httpx; keyring, pypdf, nicegui and pywebview are used from M5 on;
+# segno draws the QR code for phone access; fpdf2 makes the PDF book (Read → Save as PDF);
+# pystray (with Pillow for its picture) is the icon beside the clock when the app runs hidden.
+PyYAML==6.0.3
+httpx==0.28.1
+keyring==25.7.0
+pypdf==6.19.0
+nicegui==3.17.1
+pywebview==6.2.1
+segno==1.6.6
+fpdf2==2.8.9
+pystray==0.19.5
+Pillow==12.3.0

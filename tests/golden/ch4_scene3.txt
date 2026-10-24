@@ -1,0 +1,163 @@
+Preview: chapter 4, scene 3 "The Missing Page" (scene mode)
+Target: about 1,000 words. POV Mara Venn, third person, past tense
+Size: about 1,919 tokens (limit 60,000), 6 messages
+
+Included
+      131  Style guide                  always included
+       91  World rules                  always included
+      113  Story bible                  always included
+      150  Mara Venn                    POV character
+       70  Harbour archive              mentioned 1x
+       85  The forged ledger            status: climax
+
+Left out
+           Ada Quill                    not mentioned
+           Tobias Reed                  not mentioned
+           Will Harrow                  not mentioned
+           Brindle Cove clock tower     not mentioned
+           The harbour ledger           not mentioned
+           Old debts                    status: resolved
+
+===== system =====
+You are writing "The Saltmarsh Clock", a gentle small-town mystery, one chapter at a time.
+
+Write in close third person, past tense, staying inside the point-of-view character's head.
+The tone is warm, wry and observant; the mystery unfolds through small physical clues.
+Treat the style guide, world rules, story bible and character files as binding facts.
+Follow the chapter instructions in order. Never solve a mystery earlier than the instructions say.
+
+How to use this request:
+- The material before <task> is this book's reference: treat it as true. Where it says how the book is written (a style guide, the writer's guide's voice and rules), write every line that way: it is this book's own choice.
+- Character, place and lore files describe how things stand at this point in the story. Don't contradict them.
+- "Changes during this chapter" happen at the scene shown; before that scene, things are as described above them.
+- The brief (or the task's instructions) decides what happens; the reference material gives lasting facts, not permission to add plot. Connective detail, incidental action, texture and how the dialogue goes are yours, as long as no consequential fact changes: never invent an important earlier meeting, revelation, promise, relationship, decision or outcome, and keep each character's knowledge and relationships as they stand. How an event is realised on the page (its physical experience, psychology, reactions and pacing) is yours to write in full.
+- A brief's "Coming in" is how things stand as the scene opens (who is where, who holds what, what is broken or whole, the time): keep to it, and change things only as its beats do. Stop where its "Ending" stops, in the state it gives: what comes after belongs to the next scene.
+- Every numbered beat happens on the page, in its order: a (full) one at length, a (brief) one in a line or two, none left out. A line the brief quotes, or gives someone to say, is said, by that person. Who is where, holds, knows or has decided what changes only where a beat changes it.
+- Write only what <task> asks for, in order. Beats under "Later in this chapter (do not write yet)" come later: don't write them, foreshadow them or skip ahead to them.
+- Aim for about the target length, spent where the instructions put the weight: important moments at length, transitions briefly. Never fill it with filler or invented incident; dwelling on an important moment, and an action that keeps changing as it repeats, are never padding.
+- A brief that choreographs the scene stage by stage: write every stage, in its order and at about its share of the words, as lived prose, never as a list or a summary of the stage.
+- The instructions, the guide and the brief describe the prose; their words for it never go into it: no beat marks, stage or level names or numbers, none of the plan's names for things (an "engine", a "turn", a "set piece"), and never a label where the thing itself belongs. When they call a voice "cruel", a sound "wordless" or a movement "helpless", write what is said, word for word, the sound as it sounds, what the body does. A line a brief gives someone is said; a sound or a line the guide or the instructions give as an example of a kind is only an example: vary it, never repeat it from scene to scene.
+- Reply with the prose only: no title, chapter heading, scene numbers, notes or commentary.
+
+===== user =====
+<style_guide>
+## Voice
+Close third person through Mara. She notices mechanisms, sounds and weather before people's faces.
+Dry humour, never slapstick.
+
+## Prose
+- Short and medium sentences; one long sentence per scene at most, for a moment of wonder.
+- Concrete nouns over adjectives. Name the tool, the fish, the type of rope.
+- Dialogue carries the plot; tags are almost always "said".
+
+## Avoid
+- Characters explaining things they both already know.
+- Ending a chapter on a summary of feelings. End on an action or a line of dialogue.
+</style_guide>
+
+<world_rules>
+## Hard rules
+- No magic and nothing supernatural. Every clue has a physical explanation.
+- Clockwork details must be plausible: escapements, pendulums, winding keys, bevel gears.
+- The tide matters: the harbour is only reachable by the causeway at low tide after dark.
+- Phones work, but signal on the marsh is poor; nobody solves anything by searching online.
+</world_rules>
+
+<story_bible>
+## Premise
+Brindle Cove is a fishing town on a salt marsh. Its harbour clock has kept time for the tides
+for a hundred and forty years. One morning it stops at 3:12, and the town's clockmaker,
+Mara Venn, finds it was stopped on purpose.
+
+## Setting
+Present day, late autumn. One harbour, one inn, one archive above the harbour office.
+Everyone knows everyone's boat.
+
+## Themes
+Keeping time and keeping secrets; what a small town chooses to remember.
+</story_bible>
+
+<characters>
+<entry name="Mara Venn" type="character" aliases="Mara, the clockmaker" role="point of view">
+age: 34 | occupation: Clockmaker | status: well
+## Profile
+Runs the clock repair shop her father founded. Precise, stubborn, distrusts anything she
+can't take apart. Talks to mechanisms more kindly than to people.
+## Appearance
+Ink-stained fingers; dark hair tied back with a length of clock wire.
+## Voice
+Short questions. Answers a question with a question when she's hiding something.
+## Developments so far
+- (ch2) Has started carrying her late father's pocket watch, though it doesn't run.
+</entry>
+</characters>
+
+<places_and_lore>
+<entry name="Harbour archive" type="place" aliases="the archive, the ledger room">
+## Description
+Two low rooms above the harbour office, smelling of brine and old glue. Shelves of
+harbour ledgers going back to 1880. The window looks straight across at the clock tower.
+</entry>
+</places_and_lore>
+
+<subplots>
+<subplot name="The forged ledger" status="climax">
+## Summary
+A page of the harbour ledger was recopied decades ago, and a name on it changed. Someone
+in town has just worked this out, and stopping the clock is part of how they mean to prove it.
+## In this chapter
+The missing original page is found inside the clock mechanism.
+</subplot>
+</subplots>
+
+<task>
+Write scene 1 of 3 ("The key") of chapter 4, "The Missing Page".
+Point of view: Mara Venn, third person, past tense.
+Target length: about 1,000 words.
+
+This scene:
+- Mara lets herself into the ledger room at night.
+
+Later in this chapter (do not write yet):
+Scene 2: The lamp
+- The storm lamp falls as she climbs the tower; she burns her palm catching it.
+
+(1 more scene follows later in this chapter.)
+</task>
+
+===== assistant =====
+The ledger-room key turned as if it had been waiting for her.
+
+===== user =====
+<updates>
+- Mara Venn: From this scene on, Appearance becomes: A fresh burn across her left palm from the tower lamp; she keeps the hand in her pocket.
+</updates>
+
+<task>
+Write scene 2 of 3 ("The lamp"). Continue directly from where the previous scene ended.
+Point of view: Mara Venn, third person, past tense.
+Target length: about 1,000 words.
+
+This scene:
+- The storm lamp falls as she climbs the tower; she burns her palm catching it.
+
+(1 more scene follows later in this chapter.)
+</task>
+
+===== assistant =====
+The lamp went down the stairwell in a spray of light, and she caught it, and it bit.
+
+===== user =====
+<updates>
+- Mara Venn: Revealed in this scene: Years ago she helped her father recopy a damaged page of the harbour ledger, and she
+  has always suspected he changed a name while doing it.
+</updates>
+
+<task>
+Write scene 3 of 3 ("The mechanism"). Continue directly from where the previous scene ended.
+Point of view: Mara Venn, third person, past tense.
+Target length: about 1,000 words.
+
+This scene:
+- Behind the bevel gears she finds the original ledger page, and recognises the handwriting.
+</task>

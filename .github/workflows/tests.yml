@@ -1,0 +1,48 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install test dependencies
+        run: pip install -r requirements.txt pytest==9.1.1
+      - name: Run tests
+        run: python -m pytest -q
+
+  server:
+    # The app on a Linux server, set up the way docs/cloud-setup.md does it: deploy/setup-server.sh as root,
+    # the systemd service, no keyring and no window. (Tailscale and the firewall are left out on this machine.)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up the server
+        run: sudo env SOURCE="$PWD" SKIP_TAILSCALE=1 SKIP_FIREWALL=1 bash deploy/setup-server.sh
+      - name: The service answers, keeps keys without a keyring, and comes back after a restart
+        run: |
+          systemctl is-active devils-workshop
+          curl -fs http://127.0.0.1:8080/manifest.webmanifest | grep -q "Devil's Workshop"
+          curl -fs -o /dev/null http://127.0.0.1:8080/settings
+          cd /opt/devils-workshop && sudo -u dw -H .venv/bin/python -c "
+          from devils_workshop.settings import key_place, set_api_key, get_api_key, settings_dir
+          import os, stat
+          set_api_key('sk-or-test-0123456789'); assert get_api_key() == 'sk-or-test-0123456789'
+          mode = stat.S_IMODE(os.stat(settings_dir() / 'keys.json').st_mode)
+          assert mode == 0o600, oct(mode)
+          print('keys kept in', key_place())"
+          sudo systemctl restart devils-workshop
+          sleep 5
+          curl -fs -o /dev/null http://127.0.0.1:8080/settings
+      - name: The app's log
+        if: always()
+        run: sudo journalctl -u devils-workshop -n 80 --no-pager
